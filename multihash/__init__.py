@@ -10,14 +10,14 @@ import uvarint
 
 
 class MultiHash(NamedTuple):
-    """The digest and its associated metadata."""
+    """The digest, its length and the hashing algorithm that produced it."""
     function: int
     length: int
     digest: bytes
 
 
 def decode(multihash: bytes) -> MultiHash:
-    """Decode the given bytes as a multihash value"""
+    """Decode the given bytes as a multihash value."""
     (function, length), bytes_read = uvarint.expect(2, multihash)
     digest = multihash[bytes_read:]
 
