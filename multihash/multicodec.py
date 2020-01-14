@@ -7,6 +7,7 @@ References:
 
 from enum import IntEnum, unique
 
+
 @unique
 class Table(IntEnum):
     """Canonical table of of hashes defined by the multicodec project."""

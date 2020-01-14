@@ -29,6 +29,7 @@ class LengthMismatchError(Exception):
         self.expected = expected
         self.actual = actual
 
+
 def decode(multihash: bytes) -> MultiHash:
     """Decode the given bytes as a multihash value."""
     (function, length), digest = uvarint.cut(2, multihash)
