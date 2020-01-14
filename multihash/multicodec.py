@@ -1,3 +1,10 @@
+"""Hash algorithms defined by the multicodec project.
+
+References:
+    https://github.com/multiformats/multicodec
+    https://github.com/multiformats/multicodec/blob/master/table.csv
+"""
+
 from enum import IntEnum, unique
 
 @unique
