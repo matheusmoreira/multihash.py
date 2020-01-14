@@ -16,8 +16,20 @@ class MultiHash(NamedTuple):
     digest: bytes
 
 
+class LengthMismatchError(Exception):
+    """Raised when the multihash and actual digest lengths don't match."""
+    def __init__(self, multihash_length, digest_length):
+        template = "length from data ({}) and metadata ({}) don't match"
+        super().__init__(template.format(digest_length, multihash_length))
+
+        self.multihash_length = multihash_length
+        self.digest_length = digest_length
+
 def decode(multihash: bytes) -> MultiHash:
     """Decode the given bytes as a multihash value."""
     (function, length), digest = uvarint.cut(2, multihash)
+
+    if len(digest) != length:
+        raise LengthMismatchError(length, len(digest))
 
     return MultiHash(function, length, digest)
