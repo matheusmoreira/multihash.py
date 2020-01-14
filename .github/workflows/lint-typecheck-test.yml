@@ -17,9 +17,9 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install tools
+    - name: Install dependencies
       run: |
-        pip install flake8 pylint mypy
+        pip install flake8 pylint mypy uvarint
     - name: Lint
       run: |
         # stop the build if there are Python syntax errors or undefined names
