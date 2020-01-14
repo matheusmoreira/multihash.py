@@ -1,10 +1,11 @@
 package := multihash
 sources := $(wildcard $(package)/*.py)
+reference_table_url := https://raw.githubusercontent.com/multiformats/multicodec/master/table.csv
 
 pkg_dirs := build/ dist/ $(package).egg-info/
 cache_dirs := __pycache__/ .mypy_cache/
 
-.PHONY += sane check test lint clean-cache clean stub dist publish
+.PHONY += sane check check-table test lint clean-cache clean stub dist publish
 .DEFAULT_GOAL := sane
 
 # Sanity checking
@@ -17,6 +18,9 @@ lint: $(sources)
 check: $(sources) test.py
 	mypy --strict --strict-equality $^
 
+check-table: check_table.py
+	curl --silent '$(reference_table_url)' | python $<
+
 test: test.py
 	python $<
 
@@ -24,7 +28,7 @@ test: test.py
 stub: $(sources)
 	stubgen --output . --package $(package)
 
-dist: setup.py sane stub
+dist: setup.py sane check-table stub
 	python $< sdist bdist_wheel
 
 publish: dist
