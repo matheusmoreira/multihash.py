@@ -18,7 +18,6 @@ class MultiHash(NamedTuple):
 
 def decode(multihash: bytes) -> MultiHash:
     """Decode the given bytes as a multihash value."""
-    (function, length), bytes_read = uvarint.expect(2, multihash)
-    digest = multihash[bytes_read:]
+    (function, length), digest = uvarint.cut(2, multihash)
 
     return MultiHash(function, length, digest)
