@@ -19,15 +19,15 @@ class MultiHash(NamedTuple):
 class LengthMismatchError(Exception):
     """Raised when the multihash and actual digest lengths don't match."""
 
-    multihash_length: int
-    digest_length: int
+    expected: int
+    actual: int
 
-    def __init__(self, multihash_length: int, digest_length: int) -> None:
+    def __init__(self, expected: int, actual: int) -> None:
         template = "length from data ({}) and metadata ({}) don't match"
-        super().__init__(template.format(digest_length, multihash_length))
+        super().__init__(template.format(actual, expected))
 
-        self.multihash_length = multihash_length
-        self.digest_length = digest_length
+        self.expected = expected
+        self.actual = actual
 
 def decode(multihash: bytes) -> MultiHash:
     """Decode the given bytes as a multihash value."""
