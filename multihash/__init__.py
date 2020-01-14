@@ -24,7 +24,7 @@ class LengthMismatchError(Exception):
 
     def __init__(self, multihash_length: int, digest_length: int) -> None:
         template = "length from data ({}) and metadata ({}) don't match"
-        super().__init__(template.format(multihash_length, digest_length))
+        super().__init__(template.format(digest_length, multihash_length))
 
         self.multihash_length = multihash_length
         self.digest_length = digest_length
